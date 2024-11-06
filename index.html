@@ -40,9 +40,12 @@
     </div>
 
     <script>
+        // Toggle to remove all visitors (uncomment to activate)
+        // localStorage.removeItem("visitors"); // Uncomment this line to clear all visitors
+
         let visitCount = localStorage.getItem("visitCount") ? parseInt(localStorage.getItem("visitCount")) : 0;
         let visitors = JSON.parse(localStorage.getItem("visitors")) || [];
-        let loggedInUser = localStorage.getItem("userId");
+        let loggedInUser = getCookie("userId");
 
         let logButton = document.getElementById("logButton");
         let usernameInput = document.getElementById("username");
@@ -51,11 +54,11 @@
         let visitorListElement = document.getElementById("visitorList");
 
         if (loggedInUser) {
-            // If the user has already logged their visit, disable the button
             let existingVisit = visitors.find(visitor => visitor.userId === loggedInUser);
             if (existingVisit) {
                 logButton.disabled = true;
                 logButton.style.backgroundColor = "#ccc";
+                logButton.innerText = "You have already logged your visit!";
                 responseText.innerText = "You have already logged your visit!";
             }
         }
@@ -73,14 +76,14 @@
 
             if (!loggedInUser) {
                 loggedInUser = 'user-' + Date.now();
-                localStorage.setItem("userId", loggedInUser);
+                setCookie("userId", loggedInUser, 365); // Store for 1 year in a cookie
             }
 
-            // Check if the user has already logged their visit
             let existingVisit = visitors.find(visitor => visitor.userId === loggedInUser);
             if (existingVisit) {
                 logButton.disabled = true;
                 logButton.style.backgroundColor = "#ccc";
+                logButton.innerText = "You have already logged your visit!";
                 responseText.innerText = "You have already logged your visit!";
                 return;
             }
@@ -93,6 +96,7 @@
 
             logButton.disabled = true;
             logButton.style.backgroundColor = "#ccc";
+            logButton.innerText = "You have already logged your visit!";
             responseText.innerText = `Visit logged successfully for ${username}!`;
 
             visitCountElement.innerText = visitCount;
@@ -106,6 +110,25 @@
                 listItem.innerText = visitor.username;
                 visitorListElement.appendChild(listItem);
             });
+        }
+
+        function setCookie(name, value, days) {
+            let date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + date.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+
+        function getCookie(name) {
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i].trim();
+                if (c.indexOf(name + "=") === 0) {
+                    return c.substring(name.length + 1, c.length);
+                }
+            }
+            return "";
         }
 
         visitCountElement.innerText = visitCount;
