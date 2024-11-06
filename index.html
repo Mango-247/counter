@@ -21,10 +21,20 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        button:disabled {
-            background-color: #659bdf;
-            cursor: not-allowed;
+        button {
+            color: black; /* Default text color */
         }
+        
+        button:disabled {
+            background-color: #659bdf;  /* Disabled button color */
+            cursor: not-allowed;
+            color: black; /* Text color for disabled button */
+        }
+        
+        button:not(:disabled) {
+            background-color: #4CAF50; /* Enabled button color */
+        }
+
     </style>
 </head>
 <body>
