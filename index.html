@@ -50,7 +50,6 @@
 
         let logButton = document.getElementById("logButton");
         let usernameInput = document.getElementById("username");
-        let responseText = document.getElementById("response");
         let visitCountElement = document.getElementById("visitCount");
         let visitorListElement = document.getElementById("visitorList");
 
@@ -60,7 +59,6 @@
                 logButton.disabled = true;
                 logButton.style.backgroundColor = "#ccc";
                 logButton.innerText = "You have already logged your visit!";
-                responseText.innerText = "You have already logged your visit!";
             }
         }
 
@@ -85,7 +83,6 @@
                 logButton.disabled = true;
                 logButton.style.backgroundColor = "#ccc";
                 logButton.innerText = "You have already logged your visit!";
-                responseText.innerText = "You have already logged your visit!";
                 return;
             }
 
@@ -98,7 +95,6 @@
             logButton.disabled = true;
             logButton.style.backgroundColor = "#ccc";
             logButton.innerText = "You have already logged your visit!";
-            responseText.innerText = `Visit logged successfully for ${username}!`;
 
             visitCountElement.innerText = visitCount;
             updateVisitorList();
