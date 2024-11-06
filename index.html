@@ -11,19 +11,12 @@
     <p id="response"></p>
 
     <script>
-        // Check if a unique user ID already exists in localStorage
         let userId = localStorage.getItem("userId");
-
-        // If not, generate a new unique ID and store it
         if (!userId) {
-            userId = 'user-' + Date.now(); // Using current timestamp for a unique ID
+            userId = 'user-' + Date.now(); 
             localStorage.setItem("userId", userId);
         }
-
-        // Display a welcome message with the user's unique ID
-        document.getElementById("response").innerText = `Your unique user ID is: ${userId}`;
-
-        // Log button click event
+        document.getElementById("response").innerText = `Your user ID is: ${userId}`;
         document.getElementById("logButton").addEventListener("click", () => {
             alert(`Visit logged for user: ${userId}`);
             document.getElementById("response").innerText = `Visit logged for user: ${userId}`;
