@@ -4,23 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visit Logger</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome!</h1>
-    <button id="logButton">Click to Log Your Visit</button>
-    <p id="response"></p>
+    <div class="container">
+        <h1>Welcome!</h1>
+        <input type="text" id="username" placeholder="Enter your username" />
+        <br><br>
+        <button id="logButton" disabled>Click to Log Your Visit</button>
+        <p id="response"></p>
+        <p>Visit Count: <span id="visitCount">0</span></p>
+        <h3>Visitors:</h3>
+        <ul id="visitorList"></ul>
+    </div>
 
     <script>
-        let userId = localStorage.getItem("userId");
-        if (!userId) {
-            userId = 'user-' + Date.now(); 
-            localStorage.setItem("userId", userId);
-        }
-        document.getElementById("response").innerText = `Your user ID is: ${userId}`;
-        document.getElementById("logButton").addEventListener("click", () => {
-            alert(`Visit logged for user: ${userId}`);
-            document.getElementById("response").innerText = `Visit logged for user: ${userId}`;
+        let visitCount = localStorage.getItem("visitCount") ? parseInt(localStorage.getItem("visitCount")) : 0;
+        let visitors = JSON.parse(localStorage.getItem("visitors")) || [];
+
+        let logButton = document.getElementById("logButton");
+        let usernameInput = document.getElementById("username");
+        let responseText = document.getElementById("response");
+        let visitCountElement = document.getElementById("visitCount");
+        let visitorListElement = document.getElementById("visitorList");
+
+        usernameInput.addEventListener("input", () => {
+            if (usernameInput.value.trim()) {
+                logButton.disabled = false;
+            } else {
+                logButton.disabled = true;
+            }
         });
+
+        logButton.addEventListener("click", () => {
+            let username = usernameInput.value.trim();
+            let userId = localStorage.getItem("userId");
+
+            if (!userId) {
+                userId = 'user-' + Date.now();
+                localStorage.setItem("userId", userId);
+            }
+
+            visitors.push({ userId, username });
+            localStorage.setItem("visitors", JSON.stringify(visitors));
+
+            visitCount++;
+            localStorage.setItem("visitCount", visitCount);
+
+            logButton.disabled = true;
+            logButton.style.backgroundColor = "#ccc";
+            responseText.innerText = `Visit logged successfully for ${username}!`;
+
+            visitCountElement.innerText = visitCount;
+            updateVisitorList();
+        });
+
+        function updateVisitorList() {
+            visitorListElement.innerHTML = "";
+            visitors.forEach(visitor => {
+                let listItem = document.createElement("li");
+                listItem.innerText = visitor.username;
+                visitorListElement.appendChild(listItem);
+            });
+        }
+
+        visitCountElement.innerText = visitCount;
+        updateVisitorList();
     </script>
 </body>
 </html>
