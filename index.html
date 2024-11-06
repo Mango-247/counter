@@ -59,7 +59,7 @@
             let existingVisit = visitors.find(visitor => visitor.userId === loggedInUser);
             if (existingVisit) {
                 logButton.disabled = true;
-                logButton.style.backgroundColor = "#ccc";
+                logButton.style.backgroundColor = "#659bdf";
                 logButton.innerText = "You have already logged your visit!";
             }
         }
@@ -83,7 +83,7 @@
             let existingVisit = visitors.find(visitor => visitor.userId === loggedInUser);
             if (existingVisit) {
                 logButton.disabled = true;
-                logButton.style.backgroundColor = "#ccc";
+                logButton.style.backgroundColor = "#659bdf";
                 logButton.innerText = "You have already logged your visit!";
                 return;
             }
@@ -95,7 +95,7 @@
             localStorage.setItem("visitCount", visitCount);
 
             logButton.disabled = true;
-            logButton.style.backgroundColor = "#ccc";
+            logButton.style.backgroundColor = "#659bdf";
             logButton.innerText = "You have already logged your visit!";
 
             visitCountElement.innerText = visitCount;
