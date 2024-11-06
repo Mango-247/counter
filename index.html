@@ -21,6 +21,25 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+        #logButton {
+            background-color: #81D4FA;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 12px;
+            cursor: not-allowed;
+            transition: background-color 0.3s ease;
+        }
+
+        #logButton:enabled {
+            cursor: pointer;
+        }
+
+        #logButton:hover:enabled {
+            background-color: #4FC3F7;
+        }
+
         button:disabled {
             background-color: #ccc;
             cursor: not-allowed;
@@ -42,8 +61,7 @@
     <script>
         // localStorage.removeItem("visitors");
         // localStorage.removeItem("visitCount");
-
-
+        
         let visitCount = localStorage.getItem("visitCount") ? parseInt(localStorage.getItem("visitCount")) : 0;
         let visitors = JSON.parse(localStorage.getItem("visitors")) || [];
         let loggedInUser = getCookie("userId");
