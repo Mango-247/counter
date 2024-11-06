@@ -41,7 +41,7 @@
 
     <script>
         // Toggle to remove all visitors (uncomment to activate)
-        // localStorage.removeItem("visitors"); // Uncomment this line to clear all visitors
+         localStorage.removeItem("visitors"); // Uncomment this line to clear all visitors
 
         let visitCount = localStorage.getItem("visitCount") ? parseInt(localStorage.getItem("visitCount")) : 0;
         let visitors = JSON.parse(localStorage.getItem("visitors")) || [];
